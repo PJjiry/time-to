@@ -1,10 +1,11 @@
 import styles from "./App.module.css";
 import Header from "./components/Header.tsx";
-import React from "react";
+import React, {useState} from "react";
 import EventsList from "./components/EventsList.tsx";
-import {EventItemProps} from "./types";
+import { EventItemProps} from "./types";
+import EventForm from "./components/EventForm.tsx";
 
-const events: EventItemProps[] = [
+const DummyEvents: EventItemProps[] = [
     {
         id: 1,
         title: "Trip to Brno",
@@ -32,12 +33,16 @@ const events: EventItemProps[] = [
 ];
 
 const App:React.FC = () => {
+    const [events] = useState<EventItemProps[]>(DummyEvents);
+    const [formIsVisible, setFormIsVisible] = useState<boolean>(false);
+
     return (
         <div className={styles.container}>
             <h1 className={styles.mainTitle}>Time to ... app</h1>
-            <Header />
-            <main>
+            <Header eventsLength={events.length} onOpenForm={() => setFormIsVisible((prevIsVisible)=>!prevIsVisible)} buttonIsVisible={!formIsVisible} />
+            <main className={styles.main}>
                 <EventsList events={events} />
+                {formIsVisible && <EventForm onCancel={() => setFormIsVisible(false)}/>}
             </main>
         </div>
     );
