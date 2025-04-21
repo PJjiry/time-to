@@ -4,10 +4,10 @@ import React from "react";
 import EventItem from "./EventItem.tsx";
 
 
-const EventsList: React.FC<{events:EventItemProps[], onStartEdit: (event: EventItemProps) => void;}> = ({events, onStartEdit}) => {
+const EventsList: React.FC<{events:EventItemProps[], onStartEdit: (event: EventItemProps) => void;onDelete:(id:number)=>void, onLabelClick:(label:string)=>void}> = ({events, onStartEdit, onDelete, onLabelClick}) => {
     return <div className={styles.cardsContainer}>
         {events.map((event) => (
-            <EventItem key={event.id} event={event} onStartEdit={onStartEdit} />
+            <EventItem key={event.id} event={event} onStartEdit={onStartEdit} onDelete={onDelete} onLabelClick={onLabelClick} />
         ))}
     </div>
 }

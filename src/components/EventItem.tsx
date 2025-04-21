@@ -1,9 +1,9 @@
 import styles from "../styles/EventItem.module.css";
 import React from "react";
 import {EventItemProps} from "../types";
-import {getTimeLeftFromInput} from "../utils/utils.ts";
+import {getLabelColor, getTimeLeftFromInput} from "../utils/utils.ts";
 
-const EventItem: React.FC<{ event: EventItemProps, onStartEdit:(event: EventItemProps) => void; }> = ({event, onStartEdit}) => {
+const EventItem: React.FC<{ event: EventItemProps, onStartEdit:(event: EventItemProps) => void, onDelete:(id:number)=>void, onLabelClick:(label:string)=>void}> = ({event, onStartEdit, onDelete, onLabelClick}) => {
     const timeLeft = getTimeLeftFromInput(event.datetime);
 
     return (
@@ -18,13 +18,13 @@ const EventItem: React.FC<{ event: EventItemProps, onStartEdit:(event: EventItem
                     <p className={styles.timeLeft}>{timeLeft}</p>
                     <div className={styles.labels}>
                         {event.labels?.map((label, index) => (
-                            <span key={index} className={styles.label}>{label}</span>
+                            <span key={index} className={styles.label} style={{ backgroundColor: getLabelColor(label) }} onClick={()=>onLabelClick(label)}>{label}</span>
                         ))}
                     </div>
                 </div>
                 <div className={styles.actions}>
                     <button className={styles.editBtn} onClick={() => onStartEdit(event)}>Edit</button>
-                    <button className={styles.deleteBtn}>Delete</button>
+                    <button className={styles.deleteBtn} onClick={()=>{onDelete(event.id)}}>Delete</button>
                 </div>
             </div>
         </div>
