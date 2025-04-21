@@ -1,25 +1,46 @@
-import React, { useState, FormEvent } from "react";
+import React, {useState, FormEvent} from "react";
 import styles from "../styles/EventForm.module.css";
-import {EventData, EventFormProps, Priority} from "../types";
+import {EventFormProps, EventItemProps, Priority} from "../types";
+import {generateRandomId} from "../utils/utils.ts";
 
-const EventForm: React.FC<EventFormProps> = ({ initialData, onSave, onCancel }) => {
+const EventForm: React.FC<EventFormProps> = ({initialData, onAdd, onEdit, onCancel}) => {
     const [title, setTitle] = useState(initialData?.title || "");
     const [description, setDescription] = useState(initialData?.description || "");
     const [datetime, setDatetime] = useState(initialData?.datetime || "");
-    const [tags, setTags] = useState(initialData?.tags.join(" ") || "");
+    const [labelsInput, setLabelsInput] = useState(initialData?.labels?.join(" ") || "");
     const [priority, setPriority] = useState<Priority>(initialData?.priority || "medium");
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
-        const newEvent: EventData = {
-            id: initialData?.id || crypto.randomUUID(),
-            title,
-            description,
-            datetime,
-            tags: tags.trim().split(" ").filter(tag => tag !== ""),
-            priority,
-        };
-        onSave(newEvent);
+        const labels = labelsInput
+            .split(" ")
+            .map(tag => tag.trim())
+            .filter(tag => tag.length > 0);
+
+        if (initialData?.id) {
+            const editedEvent: EventItemProps = {
+                id: initialData.id,
+                title,
+                description,
+                datetime,
+                labels,
+                priority,
+            };
+
+            onEdit(editedEvent);
+        } else {
+            const newEvent: EventItemProps = {
+                id: generateRandomId(),
+                title,
+                description,
+                datetime,
+                labels,
+                priority,
+            };
+            onAdd(newEvent);
+        }
+
+        onCancel();
     };
 
     return (
@@ -32,15 +53,16 @@ const EventForm: React.FC<EventFormProps> = ({ initialData, onSave, onCancel }) 
                 </label>
                 <label>
                     Description:
-                    <textarea value={description} onChange={(e) => setDescription(e.target.value)} maxLength={150} />
+                    <textarea value={description} onChange={(e) => setDescription(e.target.value)} maxLength={150}/>
                 </label>
                 <label>
                     Date and Time:
-                    <input type="datetime-local" value={datetime} onChange={(e) => setDatetime(e.target.value)} required />
+                    <input type="datetime-local" value={datetime} onChange={(e) => setDatetime(e.target.value)}
+                           required/>
                 </label>
                 <label>
                     Tags (separated by space):
-                    <input value={tags} onChange={(e) => setTags(e.target.value)} maxLength={100}/>
+                    <input value={labelsInput} onChange={(e) => setLabelsInput(e.target.value)} maxLength={100}/>
                 </label>
                 <label>
                     Priority:
