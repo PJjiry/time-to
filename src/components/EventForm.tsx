@@ -50,11 +50,11 @@ const EventForm: React.FC<EventFormProps> = ({initialData, onAdd, onEdit, onCanc
             <form onSubmit={handleSubmit} className={styles.form}>
                 <label>
                     Title:
-                    <input value={title} onChange={(e) => setTitle(e.target.value)} required maxLength={50}/>
+                    <input value={title} onChange={(e) => setTitle(e.target.value)} required maxLength={100}/>
                 </label>
                 <label>
                     Description:
-                    <textarea value={description} onChange={(e) => setDescription(e.target.value)} maxLength={150}/>
+                    <textarea value={description} onChange={(e) => setDescription(e.target.value)} maxLength={300}/>
                 </label>
                 <label>
                     Date and Time:
@@ -63,7 +63,7 @@ const EventForm: React.FC<EventFormProps> = ({initialData, onAdd, onEdit, onCanc
                 </label>
                 <label>
                     Tags (separated by space):
-                    <input value={labelsInput} onChange={(e) => setLabelsInput(e.target.value)} maxLength={100}/>
+                    <input value={labelsInput} onChange={(e) => setLabelsInput(e.target.value)} maxLength={150}/>
                 </label>
                 <label>
                     Priority:
