@@ -2,7 +2,7 @@ import styles from "./App.module.css";
 import Header from "./components/Header.tsx";
 import React, {useState} from "react";
 import EventsList from "./components/EventsList.tsx";
-import { EventItemProps} from "./types";
+import {EventItemProps} from "./types";
 import EventForm from "./components/EventForm.tsx";
 
 const DummyEvents: EventItemProps[] = [
@@ -10,7 +10,7 @@ const DummyEvents: EventItemProps[] = [
         id: 1,
         title: "Trip to Brno",
         description: "We are going from the main train station",
-        datetime:"2025-04-23T14:30",
+        datetime: "2025-04-23T14:30",
         labels: ["Holidays", "Personal"],
         priority: "medium",
     },
@@ -37,8 +37,8 @@ const App: React.FC = () => {
     const [formIsVisible, setFormIsVisible] = useState<boolean>(false);
     const [eventToEdit, setEventToEdit] = useState<EventItemProps | null>(null);
 
-    const addEventHandler = (event:EventItemProps) => {
-        setEvents((prevEvents)=>{
+    const addEventHandler = (event: EventItemProps) => {
+        setEvents((prevEvents) => {
             return [...prevEvents, event]
         })
     }
@@ -58,18 +58,28 @@ const App: React.FC = () => {
         setEventToEdit(null);
     };
 
+    const handleDeleteEvent = (id: number) => {
+        setEvents((prevEvents) => {
+            return prevEvents.filter((event) => event.id !== id)
+        })
+    }
+
     return (
         <div className={styles.container}>
             <h1 className={styles.mainTitle}>Time to ... app</h1>
             <Header eventsLength={events.length} onOpenForm={() => setFormIsVisible((prevIsVisible) => !prevIsVisible)}
                     buttonIsVisible={!formIsVisible}/>
             <main className={styles.main}>
-                <EventsList events={events} onStartEdit={startEditEventHandler} />
+                {events.length === 0 ? <div className={styles.noEvents}>No events added!!</div> :
+                    <EventsList events={events} onStartEdit={startEditEventHandler} onDelete={handleDeleteEvent}/>}
                 {formIsVisible &&
                     <EventForm initialData={eventToEdit}
-                               onCancel={() => {setFormIsVisible(false)
-                                   setEventToEdit(null);}
-                    } onAdd={addEventHandler} onEdit={editEventHandler} />}
+                               onCancel={() => {
+                                   setFormIsVisible(false)
+                                   setEventToEdit(null);
+                               }}
+                               onAdd={addEventHandler}
+                               onEdit={editEventHandler}/>}
             </main>
         </div>
     );

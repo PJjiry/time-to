@@ -3,7 +3,7 @@ import React from "react";
 import {EventItemProps} from "../types";
 import {getTimeLeftFromInput} from "../utils/utils.ts";
 
-const EventItem: React.FC<{ event: EventItemProps, onStartEdit:(event: EventItemProps) => void; }> = ({event, onStartEdit}) => {
+const EventItem: React.FC<{ event: EventItemProps, onStartEdit:(event: EventItemProps) => void, onDelete:(id:number)=>void}> = ({event, onStartEdit, onDelete}) => {
     const timeLeft = getTimeLeftFromInput(event.datetime);
 
     return (
@@ -24,7 +24,7 @@ const EventItem: React.FC<{ event: EventItemProps, onStartEdit:(event: EventItem
                 </div>
                 <div className={styles.actions}>
                     <button className={styles.editBtn} onClick={() => onStartEdit(event)}>Edit</button>
-                    <button className={styles.deleteBtn}>Delete</button>
+                    <button className={styles.deleteBtn} onClick={()=>{onDelete(event.id)}}>Delete</button>
                 </div>
             </div>
         </div>
