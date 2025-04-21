@@ -3,6 +3,6 @@ export type EventItemProps = {
     title: string;
     description?: string;
     timeLeft: string;
-    labels: string[];
+    labels?: string[];
     priority: "high" | "medium" | "low";
 };
