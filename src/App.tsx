@@ -27,14 +27,14 @@ const events: EventItemProps[] = [
         description: "The first version of the application is available to customer",
         timeLeft: "14 days and 3 hours left",
         labels: ["IT", "Work"],
-        priority: "low",
+        priority: "high",
     },
 ];
 
 const App:React.FC = () => {
     return (
         <div className={styles.container}>
-            <h1>Time to ... app</h1>
+            <h1 className={styles.mainTitle}>Time to ... app</h1>
             <Header />
             <main>
                 <EventsList events={events} />
