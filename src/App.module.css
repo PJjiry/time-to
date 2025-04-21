@@ -26,3 +26,14 @@
     color: #ef4444;
     font-size: 1.5rem;
 }
+
+body{
+    padding: 0;
+    margin: 0;
+}
+
+@media (max-width: 600px) {
+    .main {
+        flex-direction: column;
+    }
+}

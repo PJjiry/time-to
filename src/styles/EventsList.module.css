@@ -2,5 +2,14 @@
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
-    width: 90%;
+    width: 80%;
+}
+
+@media (max-width: 600px) {
+    .showForm{
+        display: none;
+    }
+    .cardsContainer {
+        width: 100%;
+    }
 }
