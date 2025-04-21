@@ -4,6 +4,7 @@
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     max-width: 500px;
+    max-height: 70vh;
 }
 
 .form {
@@ -64,5 +65,8 @@ textarea {
 @media (max-width: 600px) {
     .buttons button{
         padding: 0.7rem 1.5rem;
+    }
+    .container{
+        max-height: none;
     }
 }
