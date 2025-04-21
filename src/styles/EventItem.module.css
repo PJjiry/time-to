@@ -1,0 +1,80 @@
+
+/* Priority backgrounds */
+.high {
+    background-color: #fee2e2;
+}
+
+.medium {
+    background-color: #fef9c3;
+}
+
+.low {
+    background-color: #dcfce7;
+}
+
+.card {
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cardContent p {
+    margin: 0.3rem 0;
+}
+
+.actions {
+    margin-top: 0.5rem;
+}
+
+.editBtn {
+    background-color: #3b82f6;
+    color: white;
+    padding: 0.3rem 0.7rem;
+    margin-right: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.deleteBtn {
+    background-color: #ef4444;
+    color: white;
+    padding: 0.3rem 0.7rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.labels {
+    margin-top: 0.5rem;
+}
+
+.label {
+    display: inline-block;
+    margin-right: 0.5rem;
+    margin-top: 0.3rem;
+    padding: 0.2rem 0.6rem;
+    background-color: #e5e7eb;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+/* Bonus: můžeš později přidat různé barvy štítkům podle hodnoty */
+.label:nth-child(1) {
+    background-color: #60a5fa;
+}
+.label:nth-child(2) {
+    background-color: #fbbf24;
+}
+.label:nth-child(3) {
+    background-color: #34d399;
+}
+.label:nth-child(4) {
+    background-color: #ccfbf1;
+}
+.label:nth-child(5) {
+    background-color: #e5e7eb;
+}
+.label:nth-child(6) {
+    background-color: #fce7f3;
+}
