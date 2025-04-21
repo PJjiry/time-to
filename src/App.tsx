@@ -87,7 +87,7 @@ const App: React.FC = () => {
                     buttonIsVisible={!formIsVisible}/>
             <main className={styles.main}>
                 {events.length === 0 ? <div className={styles.noEvents}>No events added!!</div> :
-                    <EventsList onLabelClick={handleLabelClick} events={sortedEvents} onStartEdit={startEditEventHandler} onDelete={handleDeleteEvent}/>}
+                    <EventsList isFormVisible={formIsVisible} onLabelClick={handleLabelClick} events={sortedEvents} onStartEdit={startEditEventHandler} onDelete={handleDeleteEvent}/>}
                 {formIsVisible &&
                     <EventForm initialData={eventToEdit}
                                onCancel={() => {
