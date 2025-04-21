@@ -37,6 +37,7 @@ const App: React.FC = () => {
     const [events, setEvents] = useState<EventItemProps[]>(DummyEvents);
     const [formIsVisible, setFormIsVisible] = useState<boolean>(false);
     const [eventToEdit, setEventToEdit] = useState<EventItemProps | null>(null);
+    const [selectedLabel, setSelectedLabel] = useState<string | null>(null);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -77,21 +78,29 @@ const App: React.FC = () => {
         })
     }
 
-    const now = new Date();
-    const filteredEvents = events.filter(event => new Date(event.datetime) > now);
+    const handleLabelClick = (label: string) => {
+        setSelectedLabel(prev => (prev === label ? null : label));
+    };
 
-    const sortedEvents = [...filteredEvents].sort((a, b) =>
+    const now = new Date();
+    const notPassEvents = events.filter(event => new Date(event.datetime) > now);
+
+    const filteredEventsByLabel = selectedLabel
+        ? notPassEvents.filter(event => event.labels?.includes(selectedLabel))
+        : notPassEvents;
+
+    const sortedEvents = [...filteredEventsByLabel].sort((a, b) =>
         new Date(a.datetime).getTime() - new Date(b.datetime).getTime()
     );
 
     return (
         <div className={styles.container}>
             <h1 className={styles.mainTitle}>Time to ... app</h1>
-            <Header eventsLength={filteredEvents.length} onOpenForm={() => setFormIsVisible((prevIsVisible) => !prevIsVisible)}
+            <Header eventsLength={filteredEventsByLabel.length} onOpenForm={() => setFormIsVisible((prevIsVisible) => !prevIsVisible)}
                     buttonIsVisible={!formIsVisible}/>
             <main className={styles.main}>
                 {events.length === 0 ? <div className={styles.noEvents}>No events added!!</div> :
-                    <EventsList events={sortedEvents} onStartEdit={startEditEventHandler} onDelete={handleDeleteEvent}/>}
+                    <EventsList onLabelClick={handleLabelClick} events={sortedEvents} onStartEdit={startEditEventHandler} onDelete={handleDeleteEvent}/>}
                 {formIsVisible &&
                     <EventForm initialData={eventToEdit}
                                onCancel={() => {

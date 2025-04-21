@@ -3,7 +3,7 @@ import React from "react";
 import {EventItemProps} from "../types";
 import {getTimeLeftFromInput} from "../utils/utils.ts";
 
-const EventItem: React.FC<{ event: EventItemProps, onStartEdit:(event: EventItemProps) => void, onDelete:(id:number)=>void}> = ({event, onStartEdit, onDelete}) => {
+const EventItem: React.FC<{ event: EventItemProps, onStartEdit:(event: EventItemProps) => void, onDelete:(id:number)=>void, onLabelClick:(label:string)=>void}> = ({event, onStartEdit, onDelete, onLabelClick}) => {
     const timeLeft = getTimeLeftFromInput(event.datetime);
 
     return (
@@ -18,7 +18,7 @@ const EventItem: React.FC<{ event: EventItemProps, onStartEdit:(event: EventItem
                     <p className={styles.timeLeft}>{timeLeft}</p>
                     <div className={styles.labels}>
                         {event.labels?.map((label, index) => (
-                            <span key={index} className={styles.label}>{label}</span>
+                            <span key={index} className={styles.label} onClick={()=>onLabelClick(label)}>{label}</span>
                         ))}
                     </div>
                 </div>
