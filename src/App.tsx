@@ -6,38 +6,25 @@ import {EventItemProps} from "./types";
 import EventForm from "./components/EventForm.tsx";
 import {getTimeLeftFromInput} from "./utils/utils.ts";
 
-const DummyEvents: EventItemProps[] = [
-    {
-        id: 1,
-        title: "Trip to Brno",
-        description: "We are going from the main train station",
-        datetime: "2025-04-23T14:30",
-        labels: ["Holidays", "Personal"],
-        priority: "medium",
-    },
-    {
-        id: 2,
-        title: "Deadline of homework",
-        description: "The homework for software development lesson",
-        datetime: "2025-04-28T15:30",
-        labels: ["School", "Personal"],
-        priority: "high",
-    },
-    {
-        id: 3,
-        title: "Release of the project",
-        description: "The first version of the application is available to customer",
-        datetime: "2025-05-03T11:00",
-        labels: ["IT", "Work"],
-        priority: "high",
-    },
-];
-
 const App: React.FC = () => {
-    const [events, setEvents] = useState<EventItemProps[]>(DummyEvents);
+    const [events, setEvents] = useState<EventItemProps[]>(() => {
+        const stored = localStorage.getItem("my-events");
+        return stored ? JSON.parse(stored) :[];
+    });
     const [formIsVisible, setFormIsVisible] = useState<boolean>(false);
     const [eventToEdit, setEventToEdit] = useState<EventItemProps | null>(null);
     const [selectedLabel, setSelectedLabel] = useState<string | null>(null);
+
+    useEffect(() => {
+        const stored = localStorage.getItem("my-events");
+        if (stored) {
+            setEvents(JSON.parse(stored));
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem("my-events", JSON.stringify(events));
+    }, [events]);
 
     useEffect(() => {
         const interval = setInterval(() => {
