@@ -1,9 +1,10 @@
 import styles from "./App.module.css";
 import Header from "./components/Header.tsx";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import EventsList from "./components/EventsList.tsx";
 import {EventItemProps} from "./types";
 import EventForm from "./components/EventForm.tsx";
+import {getTimeLeftFromInput} from "./utils/utils.ts";
 
 const DummyEvents: EventItemProps[] = [
     {
@@ -37,6 +38,18 @@ const App: React.FC = () => {
     const [formIsVisible, setFormIsVisible] = useState<boolean>(false);
     const [eventToEdit, setEventToEdit] = useState<EventItemProps | null>(null);
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setEvents(prevEvents =>
+                prevEvents.map(event => {
+                    const timeLeft = getTimeLeftFromInput(event.datetime);
+                    return { ...event, timeLeft };
+                })
+            );
+        }, 60 * 1000);
+        return () => clearInterval(interval);
+    }, []);
+
     const addEventHandler = (event: EventItemProps) => {
         setEvents((prevEvents) => {
             return [...prevEvents, event]
@@ -64,14 +77,21 @@ const App: React.FC = () => {
         })
     }
 
+    const now = new Date();
+    const filteredEvents = events.filter(event => new Date(event.datetime) > now);
+
+    const sortedEvents = [...filteredEvents].sort((a, b) =>
+        new Date(a.datetime).getTime() - new Date(b.datetime).getTime()
+    );
+
     return (
         <div className={styles.container}>
             <h1 className={styles.mainTitle}>Time to ... app</h1>
-            <Header eventsLength={events.length} onOpenForm={() => setFormIsVisible((prevIsVisible) => !prevIsVisible)}
+            <Header eventsLength={filteredEvents.length} onOpenForm={() => setFormIsVisible((prevIsVisible) => !prevIsVisible)}
                     buttonIsVisible={!formIsVisible}/>
             <main className={styles.main}>
                 {events.length === 0 ? <div className={styles.noEvents}>No events added!!</div> :
-                    <EventsList events={events} onStartEdit={startEditEventHandler} onDelete={handleDeleteEvent}/>}
+                    <EventsList events={sortedEvents} onStartEdit={startEditEventHandler} onDelete={handleDeleteEvent}/>}
                 {formIsVisible &&
                     <EventForm initialData={eventToEdit}
                                onCancel={() => {

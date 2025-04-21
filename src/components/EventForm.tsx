@@ -1,7 +1,7 @@
 import React, {useState, FormEvent} from "react";
 import styles from "../styles/EventForm.module.css";
 import {EventFormProps, EventItemProps, Priority} from "../types";
-import {generateRandomId} from "../utils/utils.ts";
+import {generateRandomId, getNowForInput} from "../utils/utils.ts";
 
 const EventForm: React.FC<EventFormProps> = ({initialData, onAdd, onEdit, onCancel}) => {
     const [title, setTitle] = useState(initialData?.title || "");
@@ -12,6 +12,7 @@ const EventForm: React.FC<EventFormProps> = ({initialData, onAdd, onEdit, onCanc
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
+
         const labels = labelsInput
             .split(" ")
             .map(tag => tag.trim())
@@ -58,7 +59,7 @@ const EventForm: React.FC<EventFormProps> = ({initialData, onAdd, onEdit, onCanc
                 <label>
                     Date and Time:
                     <input type="datetime-local" value={datetime} onChange={(e) => setDatetime(e.target.value)}
-                           required/>
+                           required min={getNowForInput()}/>
                 </label>
                 <label>
                     Tags (separated by space):
