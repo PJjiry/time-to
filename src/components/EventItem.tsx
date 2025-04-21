@@ -1,7 +1,7 @@
 import styles from "../styles/EventItem.module.css";
 import React from "react";
 import {EventItemProps} from "../types";
-import {getTimeLeftFromInput} from "../utils/utils.ts";
+import {getLabelColor, getTimeLeftFromInput} from "../utils/utils.ts";
 
 const EventItem: React.FC<{ event: EventItemProps, onStartEdit:(event: EventItemProps) => void, onDelete:(id:number)=>void, onLabelClick:(label:string)=>void}> = ({event, onStartEdit, onDelete, onLabelClick}) => {
     const timeLeft = getTimeLeftFromInput(event.datetime);
@@ -18,7 +18,7 @@ const EventItem: React.FC<{ event: EventItemProps, onStartEdit:(event: EventItem
                     <p className={styles.timeLeft}>{timeLeft}</p>
                     <div className={styles.labels}>
                         {event.labels?.map((label, index) => (
-                            <span key={index} className={styles.label} onClick={()=>onLabelClick(label)}>{label}</span>
+                            <span key={index} className={styles.label} style={{ backgroundColor: getLabelColor(label) }} onClick={()=>onLabelClick(label)}>{label}</span>
                         ))}
                     </div>
                 </div>
