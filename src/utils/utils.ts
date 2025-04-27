@@ -1,22 +1,22 @@
 export function getTimeLeftFromInput(inputValue: string): string {
     const eventDate = new Date(inputValue);
     const now = new Date();
-    const diffMs = eventDate.getTime() - now.getTime();
+    const diffOfTheTimes = eventDate.getTime() - now.getTime();
 
-    if (isNaN(eventDate.getTime()) || diffMs <= 0) {
+    if (isNaN(eventDate.getTime()) || diffOfTheTimes <= 0) {
         return "Expired";
     }
 
-    const totalMinutes = Math.floor(diffMs / 1000 / 60);
-    const days = Math.floor(totalMinutes / 1440); // 1440 min/day
+    const totalMinutes = Math.floor(diffOfTheTimes / 1000 / 60);
+    const days = Math.floor(totalMinutes / 1440);
     const hours = Math.floor((totalMinutes % 1440) / 60);
     const minutes = totalMinutes % 60;
 
-    const parts = [];
+    const parts: string[] = [];
     if (days > 0) parts.push(`${days} day${days !== 1 ? "s" : ""}`);
     if (hours > 0) parts.push(`${hours} hour${hours !== 1 ? "s" : ""}`);
     if (minutes > 0) parts.push(`${minutes} minute${minutes !== 1 ? "s" : ""}`);
-    if(minutes===0) parts.push("0 minutes")
+    if (minutes === 0) parts.push("0 minutes")
 
     return parts.join(" and ") + " left";
 }

@@ -1,6 +1,6 @@
 import React, {useState, FormEvent} from "react";
 import styles from "../styles/EventForm.module.css";
-import {EventFormProps, EventItemProps, Priority} from "../types";
+import {EventFormProps, EventItem, Priority} from "../types";
 import {generateRandomId, getNowForInput} from "../utils/utils.ts";
 
 const EventForm: React.FC<EventFormProps> = ({initialData, onAdd, onEdit, onCancel}) => {
@@ -15,11 +15,11 @@ const EventForm: React.FC<EventFormProps> = ({initialData, onAdd, onEdit, onCanc
 
         const labels = labelsInput
             .split(" ")
-            .map(tag => tag.trim())
-            .filter(tag => tag.length > 0);
+            .map(label => label.trim())
+            .filter(label => label.length > 0);
 
         if (initialData?.id) {
-            const editedEvent: EventItemProps = {
+            const editedEvent: EventItem = {
                 id: initialData.id,
                 title,
                 description,
@@ -27,10 +27,9 @@ const EventForm: React.FC<EventFormProps> = ({initialData, onAdd, onEdit, onCanc
                 labels,
                 priority,
             };
-
             onEdit(editedEvent);
         } else {
-            const newEvent: EventItemProps = {
+            const newEvent: EventItem = {
                 id: generateRandomId(),
                 title,
                 description,
@@ -40,7 +39,6 @@ const EventForm: React.FC<EventFormProps> = ({initialData, onAdd, onEdit, onCanc
             };
             onAdd(newEvent);
         }
-
         onCancel();
     };
 
@@ -62,7 +60,7 @@ const EventForm: React.FC<EventFormProps> = ({initialData, onAdd, onEdit, onCanc
                            required min={getNowForInput()}/>
                 </label>
                 <label>
-                    Tags (separated by space):
+                    Labels (separated by space):
                     <input value={labelsInput} onChange={(e) => setLabelsInput(e.target.value)} maxLength={150}/>
                 </label>
                 <label>

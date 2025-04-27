@@ -63,10 +63,11 @@ textarea {
 }
 
 @media (max-width: 600px) {
-    .buttons button{
+    .buttons button {
         padding: 0.7rem 1.5rem;
     }
-    .container{
+
+    .container {
         max-height: none;
     }
 }
