@@ -1,6 +1,6 @@
 export type Priority = "high" | "medium" | "low";
 
-export type EventItemProps = {
+export type EventItem = {
     id: number;
     title: string;
     description?: string;
@@ -10,9 +10,9 @@ export type EventItemProps = {
 };
 
 export interface EventFormProps {
-    initialData?: EventItemProps | null,
-    onAdd: (event: EventItemProps) => void,
-    onEdit: (event: EventItemProps) => void,
+    initialData?: EventItem | null,
+    onAdd: (event: EventItem) => void,
+    onEdit: (event: EventItem) => void,
     onCancel: () => void,
 }
 
@@ -20,4 +20,20 @@ export interface HeaderProps {
     eventsLength: number;
     onOpenForm: () => void;
     buttonIsVisible: boolean;
+}
+
+export type EventItemProps = {
+    event: EventItem,
+    onStartEdit: (event: EventItem) => void,
+    onDelete: (id: number) => void,
+    onLabelClick: (label: string) => void,
+    isFormVisible: boolean
+}
+
+export type EventListProps = {
+    events: EventItem[],
+    onStartEdit: (event: EventItem) => void,
+    onDelete: (id: number) => void,
+    onLabelClick: (label: string) => void,
+    isFormVisible: boolean
 }
