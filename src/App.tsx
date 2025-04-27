@@ -1,4 +1,4 @@
-import styles from "./App.module.css";
+import styles from "./styles/App.module.css";
 import Header from "./components/Header.tsx";
 import React, {useEffect, useState} from "react";
 import EventsList from "./components/EventsList.tsx";
