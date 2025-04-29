@@ -70,4 +70,8 @@ textarea {
     .container {
         max-height: none;
     }
+
+    .cancelButton {
+        order: -1;
+    }
 }
