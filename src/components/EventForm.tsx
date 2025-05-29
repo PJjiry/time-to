@@ -33,7 +33,7 @@ const EventForm: React.FC<EventFormProps> = ({initialData}) => {
                 priority,
             };
             editEventHandler(editedEvent);
-            navigate(`/time-to/event/${initialData.id}`);
+            navigate(`/event/${initialData.id}`);
         }
         if (!initialData?.id) {
             const newEvent: EventItem = {
@@ -45,12 +45,12 @@ const EventForm: React.FC<EventFormProps> = ({initialData}) => {
                 priority,
             };
             addEventHandler(newEvent);
-            navigate("/time-to");
+            navigate("/");
         }
     };
 
     const handleCancel = () => {
-        navigate("/time-to");
+        navigate("/");
     }
 
     return (

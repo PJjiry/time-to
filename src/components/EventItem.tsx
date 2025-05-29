@@ -13,7 +13,7 @@ const EventItem: React.FC<EventItemProps> = ({event, onLabelClick}) => {
     }
 
     return (
-        <Link to={`/time-to/event/${event.id}`} className={styles.eventLink}>
+        <Link to={`/event/${event.id}`} className={styles.eventLink}>
             <div
                 key={event.id}
                 className={`${styles.card} ${styles[event.priority]}`}

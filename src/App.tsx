@@ -8,10 +8,10 @@ import {EditDetailPage} from "./pages/EditDetailPage.tsx";
 const App: React.FC = () => {
     return (<BrowserRouter>
         <Routes>
-            <Route path='time-to' element={<EventsPage/>}/>
-            <Route path='time-to/new-event' element={<NewEventPage/>}/>
-            <Route path='time-to/event/:id' element={<EventDetailPage/>}/>
-            <Route path='time-to/edit-event/:id' element={<EditDetailPage/>}/>
+            <Route path='/' element={<EventsPage/>}/>
+            <Route path='new-event' element={<NewEventPage/>}/>
+            <Route path='event/:id' element={<EventDetailPage/>}/>
+            <Route path='edit-event/:id' element={<EditDetailPage/>}/>
             <Route path="*" element={<div>Not found</div>}/>
         </Routes>
     </BrowserRouter>)

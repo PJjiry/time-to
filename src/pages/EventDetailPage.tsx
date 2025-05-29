@@ -15,13 +15,13 @@ const EventDetailPage: React.FC = () => {
     const event = events.find(e => e.id === id);
 
     const handleEdit = () => {
-        navigate(`/time-to/edit-event/${id}`);
+        navigate(`/edit-event/${id}`);
     };
 
     const handleDelete = () => {
         if (window.confirm('Are you sure you want to delete this event?')) {
             handleDeleteEvent(id);
-            navigate('/time-to');
+            navigate('/');
         }
     };
 
@@ -71,7 +71,7 @@ const EventDetailPage: React.FC = () => {
                         <button onClick={handleDelete} className={styles.deleteButton}>
                             Delete Event
                         </button>
-                        <button onClick={() => navigate('/time-to')} className={styles.backButton}>
+                        <button onClick={() => navigate('/')} className={styles.backButton}>
                             Back to Events
                         </button>
                     </div>
