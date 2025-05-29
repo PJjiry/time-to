@@ -1,0 +1,31 @@
+.errorMessage {
+    background-color: rgba(237, 66, 69, 0.15);
+    border-left: 4px solid red;
+    color: black;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.errorContent {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.errorIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 22px;
+    height: 22px;
+    background-color: red;
+    border-radius: 50%;
+    color: white;
+    font-weight: bold;
+    flex-shrink: 0;
+}

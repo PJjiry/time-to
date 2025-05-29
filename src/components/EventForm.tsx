@@ -1,9 +1,14 @@
 import React, {useState, FormEvent} from "react";
 import styles from "../styles/EventForm.module.css";
+import {useNavigate} from "react-router-dom";
 import {EventFormProps, EventItem, Priority} from "../types";
 import {generateRandomId, getNowForInput} from "../utils/utils.ts";
+import {useEvents} from "../hooks/useEvents.ts";
 
-const EventForm: React.FC<EventFormProps> = ({initialData, onAdd, onEdit, onCancel}) => {
+const EventForm: React.FC<EventFormProps> = ({initialData}) => {
+    const navigate = useNavigate();
+    const {editEventHandler, addEventHandler} = useEvents();
+
     const [title, setTitle] = useState(initialData?.title || "");
     const [description, setDescription] = useState(initialData?.description || "");
     const [datetime, setDatetime] = useState(initialData?.datetime || "");
@@ -27,8 +32,10 @@ const EventForm: React.FC<EventFormProps> = ({initialData, onAdd, onEdit, onCanc
                 labels,
                 priority,
             };
-            onEdit(editedEvent);
-        } else {
+            editEventHandler(editedEvent);
+            navigate(`/event/${initialData.id}`);
+        }
+        if (!initialData?.id) {
             const newEvent: EventItem = {
                 id: generateRandomId(),
                 title,
@@ -37,10 +44,14 @@ const EventForm: React.FC<EventFormProps> = ({initialData, onAdd, onEdit, onCanc
                 labels,
                 priority,
             };
-            onAdd(newEvent);
+            addEventHandler(newEvent);
+            navigate("/");
         }
-        onCancel();
     };
+
+    const handleCancel = () => {
+        navigate("/");
+    }
 
     return (
         <div className={styles.container}>
@@ -73,7 +84,7 @@ const EventForm: React.FC<EventFormProps> = ({initialData, onAdd, onEdit, onCanc
                 </label>
                 <div className={styles.buttons}>
                     <button type="submit" className={styles.saveButton}>Save</button>
-                    <button type="button" className={styles.cancelButton} onClick={onCancel}>Cancel</button>
+                    <button type="button" className={styles.cancelButton} onClick={handleCancel}>Cancel</button>
                 </div>
             </form>
         </div>

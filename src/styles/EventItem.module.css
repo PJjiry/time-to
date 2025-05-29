@@ -1,3 +1,15 @@
+.eventLink {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    margin-bottom: 1rem;
+    transition: transform 0.2s ease;
+}
+
+.eventLink:hover {
+    transform: translateY(-10px);
+}
+
 .high {
     background-color: #fee2e2;
 }
@@ -92,6 +104,7 @@
     .actions button {
         padding: 0.7rem 1.5rem;
     }
+
     .deleteBtn {
         order: -1;
     }
