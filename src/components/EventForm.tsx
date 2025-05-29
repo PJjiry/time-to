@@ -1,12 +1,9 @@
 import React, {useState, FormEvent} from "react";
 import styles from "../styles/EventForm.module.css";
-import { EventItem, Priority} from "../types";
+import {EventFormProps, EventItem, Priority} from "../types";
 import {generateRandomId, getNowForInput} from "../utils/utils.ts";
-import {useEvents} from "../hooks/useEvents.ts";
 
-const EventForm: React.FC = () => {
-    const {eventToEdit:initialData, editEventHandler, addEventHandler, cancelHandler}=useEvents();
-
+const EventForm: React.FC<EventFormProps> = ({initialData, onAdd, onEdit, onCancel}) => {
     const [title, setTitle] = useState(initialData?.title || "");
     const [description, setDescription] = useState(initialData?.description || "");
     const [datetime, setDatetime] = useState(initialData?.datetime || "");
@@ -30,7 +27,7 @@ const EventForm: React.FC = () => {
                 labels,
                 priority,
             };
-            editEventHandler(editedEvent);
+            onEdit(editedEvent);
         } else {
             const newEvent: EventItem = {
                 id: generateRandomId(),
@@ -40,9 +37,9 @@ const EventForm: React.FC = () => {
                 labels,
                 priority,
             };
-            addEventHandler(newEvent);
+            onAdd(newEvent);
         }
-        cancelHandler();
+        onCancel();
     };
 
     return (
@@ -76,7 +73,7 @@ const EventForm: React.FC = () => {
                 </label>
                 <div className={styles.buttons}>
                     <button type="submit" className={styles.saveButton}>Save</button>
-                    <button type="button" className={styles.cancelButton} onClick={cancelHandler}>Cancel</button>
+                    <button type="button" className={styles.cancelButton} onClick={onCancel}>Cancel</button>
                 </div>
             </form>
         </div>

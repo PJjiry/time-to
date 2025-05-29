@@ -24,6 +24,10 @@ export interface HeaderProps {
 
 export type EventItemProps = {
     event: EventItem,
+    onStartEdit: (event: EventItem) => void,
+    onDelete: (id: number) => void,
+    onLabelClick: (label: string) => void,
+    isFormVisible: boolean
 }
 
 export type EventListProps = {
