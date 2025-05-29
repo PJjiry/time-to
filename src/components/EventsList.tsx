@@ -1,14 +1,15 @@
 import styles from "../styles/EventsList.module.css";
 import React from "react";
 import EventItem from "./EventItem.tsx";
-import {EventListProps} from "../types";
+import {useEvents} from "../hooks/useEvents.ts";
 
 
-const EventsList: React.FC<EventListProps> = ({events, onStartEdit, onDelete, onLabelClick, isFormVisible}) => {
-    return <div className={`${styles.cardsContainer} ${isFormVisible ? styles.showForm : ""}`}>
-        {events.map((event) => (
-            <EventItem key={event.id} event={event} onStartEdit={onStartEdit} onDelete={onDelete}
-                       onLabelClick={onLabelClick} isFormVisible={isFormVisible}/>
+const EventsList: React.FC = () => {
+    const {formIsVisible, sortedEvents} = useEvents();
+
+    return <div className={`${styles.cardsContainer} ${formIsVisible ? styles.showForm : ""}`}>
+        {sortedEvents.map((event) => (
+            <EventItem key={event.id} event={event}/>
         ))}
     </div>
 }

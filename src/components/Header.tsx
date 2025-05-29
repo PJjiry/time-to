@@ -1,13 +1,14 @@
 import styles from "../styles/Header.module.css";
-import {HeaderProps} from "../types";
 import React from "react";
+import {useEvents} from "../hooks/useEvents.ts";
 
-const Header: React.FC<HeaderProps> = ({eventsLength, onOpenForm, buttonIsVisible}) => {
+const Header: React.FC = () => {
+    const {filteredEventsByLabel,setFormIsVisible, formIsVisible}=useEvents()
     return <header className={styles.header}>
         <div className={styles.titleSection}>
-            <h2>Events ({eventsLength})</h2>
+            <h2>Events ({filteredEventsByLabel.length})</h2>
         </div>
-        {buttonIsVisible && <button className={styles.addButton} onClick={onOpenForm}>+ Add event</button>}
+        {!formIsVisible && <button className={styles.addButton} onClick={() => setFormIsVisible((prevIsVisible) => !prevIsVisible)}>+ Add event</button>}
     </header>
 }
 export default Header;

@@ -2,8 +2,10 @@ import styles from "../styles/EventItem.module.css";
 import React from "react";
 import {EventItemProps} from "../types";
 import {getLabelColor, getTimeLeftFromInput} from "../utils/utils.ts";
+import {useEvents} from "../hooks/useEvents.ts";
 
-const EventItem: React.FC<EventItemProps> = ({event, onStartEdit, onDelete, onLabelClick, isFormVisible}) => {
+const EventItem: React.FC<EventItemProps> = ({event}) => {
+    const{ formIsVisible, handleLabelClick,startEditEventHandler, handleDeleteEvent}=useEvents()
     const timeLeft = getTimeLeftFromInput(event.datetime);
 
     return (
@@ -19,17 +21,17 @@ const EventItem: React.FC<EventItemProps> = ({event, onStartEdit, onDelete, onLa
                     <div className={styles.labels}>
                         {event.labels?.map((label, index) => (
                             <span key={index} className={styles.label} style={{backgroundColor: getLabelColor(label)}}
-                                  onClick={() => isFormVisible ? undefined : onLabelClick(label)}>{label}</span>
+                                  onClick={() => formIsVisible ? undefined : handleLabelClick(label)}>{label}</span>
                         ))}
                     </div>
                 </div>
                 <div className={styles.actions}>
-                    <button className={styles.editBtn} onClick={() => onStartEdit(event)}
-                            disabled={isFormVisible}>Edit
+                    <button className={styles.editBtn} onClick={() => startEditEventHandler(event)}
+                            disabled={formIsVisible}>Edit
                     </button>
                     <button className={styles.deleteBtn} onClick={() => {
-                        onDelete(event.id)
-                    }} disabled={isFormVisible}>Delete
+                        handleDeleteEvent(event.id)
+                    }} disabled={formIsVisible}>Delete
                     </button>
                 </div>
             </div>
