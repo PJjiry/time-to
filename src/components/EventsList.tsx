@@ -5,7 +5,7 @@ import {EventListProps} from "../types";
 
 
 const EventsList: React.FC<EventListProps> = ({events, onLabelClick}) => {
-    return <div className={styles.cardsContainer} >
+    return <div className={styles.cardsContainer}>
         {events.map((event) => (
             <EventItem key={event.id} event={event}
                        onLabelClick={onLabelClick}/>

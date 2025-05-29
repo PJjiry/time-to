@@ -3,17 +3,11 @@ import styles from "../styles/EventsPage.module.css";
 import Header from "../components/Header.tsx";
 import EventsList from "../components/EventsList.tsx";
 import SearchBar from "../components/SearchBar.tsx";
+import {Spinner} from "../components/Spinner.tsx";
+import {ErrorMessage} from "../components/ErrorMessage.tsx";
 
 const EventsPage = () => {
     const {events, selectedLabel, handleLabelClick, handleSearch, searchQuery, loading, error} = useEvents();
-
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        <div>Error: {error}</div>;   
-    }
 
     const now = new Date();
     const notPassEvents = events.filter(event => new Date(event.datetime) > now);
@@ -31,11 +25,15 @@ const EventsPage = () => {
             <h1 className={styles.mainTitle}>Time to ... app</h1>
             <Header eventsLength={filteredEventsByLabel.length}/>
             <section className={styles.main}>
-                <div>
-                    <SearchBar searchQuery={searchQuery} onSearchChange={handleSearch}/>
-                </div>
-                {events.length === 0 ? <div className={styles.noEvents}>No events found!!</div> :
-                    <EventsList onLabelClick={handleLabelClick} events={sortedEvents}/>}
+                {loading && <Spinner/>}
+                {error && <ErrorMessage message={error}/>}
+                {!loading && !error && <>
+                    <div>
+                        <SearchBar searchQuery={searchQuery} onSearchChange={handleSearch}/>
+                    </div>
+                    {events.length === 0 ? <div className={styles.noEvents}>No events found!!</div> :
+                        <EventsList onLabelClick={handleLabelClick} events={sortedEvents}/>}
+                </>}
             </section>
         </main>
     );

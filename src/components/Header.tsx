@@ -8,7 +8,9 @@ const Header: React.FC<HeaderProps> = ({eventsLength}) => {
         <div className={styles.titleSection}>
             <h2>Events ({eventsLength})</h2>
         </div>
-        <Link to="new-event"><button className={styles.addButton}>+ Add event</button></Link>
+        <Link to="new-event">
+            <button className={styles.addButton}>+ Add event</button>
+        </Link>
     </header>
 }
 export default Header;

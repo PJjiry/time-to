@@ -1,7 +1,7 @@
 export type Priority = "high" | "medium" | "low";
 
 export type EventItem = {
-    id: string;
+    id: number;
     title: string;
     description?: string;
     datetime: string;
@@ -30,4 +30,8 @@ export type EventListProps = {
 export interface SearchBarProps {
     searchQuery: string;
     onSearchChange: (query: string) => void;
+}
+
+export type ErrorMessageProps = {
+    message: string;
 }

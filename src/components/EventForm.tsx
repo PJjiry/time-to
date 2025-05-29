@@ -6,8 +6,8 @@ import {generateRandomId, getNowForInput} from "../utils/utils.ts";
 import {useEvents} from "../hooks/useEvents.ts";
 
 const EventForm: React.FC<EventFormProps> = ({initialData}) => {
-   const navigate = useNavigate();
-   const {editEventHandler, addEventHandler}=useEvents();
+    const navigate = useNavigate();
+    const {editEventHandler, addEventHandler} = useEvents();
 
     const [title, setTitle] = useState(initialData?.title || "");
     const [description, setDescription] = useState(initialData?.description || "");
@@ -35,7 +35,7 @@ const EventForm: React.FC<EventFormProps> = ({initialData}) => {
             editEventHandler(editedEvent);
             navigate(`/time-to/event/${initialData.id}`);
         }
-        if (!initialData?.id){
+        if (!initialData?.id) {
             const newEvent: EventItem = {
                 id: generateRandomId(),
                 title,

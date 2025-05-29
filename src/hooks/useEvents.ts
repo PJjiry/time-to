@@ -1,8 +1,7 @@
-
-import { useState, useEffect, useCallback } from 'react';
-import { EventItem } from '../types';
-import { firebaseAPI } from '../../firebaseAPI';
-import { getTimeLeftFromInput } from '../utils/utils.ts';
+import {useState, useEffect, useCallback} from 'react';
+import {EventItem} from '../types';
+import {firebaseAPI} from '../../firebaseAPI';
+import {getTimeLeftFromInput} from '../utils/utils.ts';
 
 export const useEvents = () => {
     const [events, setEvents] = useState<EventItem[]>([]);
@@ -48,7 +47,7 @@ export const useEvents = () => {
         try {
             setLoading(true);
             const newEventId = await firebaseAPI.addEvent(event);
-            const newEvent = { ...event, id: newEventId };
+            const newEvent = {...event, id: newEventId};
             setEvents(prevEvents => [...prevEvents, newEvent]);
             return newEventId;
         } catch (err) {
@@ -102,7 +101,6 @@ export const useEvents = () => {
         setSearchQuery(query);
     }, []);
 
-    // Filter events based on search query
     const searchedEvents = events.filter(event => {
         return searchQuery
             ? event.title.toLowerCase().includes(searchQuery.toLowerCase())

@@ -1,4 +1,3 @@
-
 import {
     collection,
     addDoc,
@@ -11,23 +10,24 @@ import {
     Timestamp,
     where
 } from 'firebase/firestore';
-import { db } from './firebase';
-import { EventItem } from './src/types';
-import { generateRandomId } from './src/utils/utils.ts';
+import {db} from './firebase';
+import {EventItem} from './src/types';
+import {generateRandomId} from './src/utils/utils.ts';
 
 const EVENTS_COLLECTION = 'events';
 
 export const firebaseAPI = {
-    async fetchEvents() {
+    async fetchEvents(): Promise<EventItem[]> {
         try {
             const eventsCollection = collection(db, EVENTS_COLLECTION);
             const eventsQuery = query(eventsCollection, orderBy('datetime', 'asc'));
             const querySnapshot = await getDocs(eventsQuery);
 
+            // @ts-ignore
             return querySnapshot.docs.map(doc => ({
                 ...doc.data(),
-                id: Number(doc.data().id), // Convert to number
-                datetime: doc.data().datetime.toDate().toISOString(),
+                id: Number(doc.data().id),
+                datetime: doc.data().datetime.toDate().toISOString().slice(0, 16),
             }));
         } catch (error) {
             console.error('Error fetching events:', error);
