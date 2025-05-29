@@ -3,9 +3,12 @@ import styles from "../styles/EventForm.module.css";
 import {useNavigate} from "react-router-dom";
 import {EventFormProps, EventItem, Priority} from "../types";
 import {generateRandomId, getNowForInput} from "../utils/utils.ts";
+import {useEvents} from "../hooks/useEvents.ts";
 
-const EventForm: React.FC<EventFormProps> = ({initialData, onAdd, onEdit}) => {
+const EventForm: React.FC<EventFormProps> = ({initialData}) => {
    const navigate = useNavigate();
+   const {editEventHandler, addEventHandler}=useEvents();
+
     const [title, setTitle] = useState(initialData?.title || "");
     const [description, setDescription] = useState(initialData?.description || "");
     const [datetime, setDatetime] = useState(initialData?.datetime || "");
@@ -20,7 +23,7 @@ const EventForm: React.FC<EventFormProps> = ({initialData, onAdd, onEdit}) => {
             .map(label => label.trim())
             .filter(label => label.length > 0);
 
-        if (initialData?.id && onEdit) {
+        if (initialData?.id) {
             const editedEvent: EventItem = {
                 id: initialData.id,
                 title,
@@ -29,10 +32,10 @@ const EventForm: React.FC<EventFormProps> = ({initialData, onAdd, onEdit}) => {
                 labels,
                 priority,
             };
-            onEdit(editedEvent);
+            editEventHandler(editedEvent);
             navigate(`/time-to/event/${initialData.id}`);
         }
-        if (!initialData?.id && onAdd){
+        if (!initialData?.id){
             const newEvent: EventItem = {
                 id: generateRandomId(),
                 title,
@@ -41,11 +44,8 @@ const EventForm: React.FC<EventFormProps> = ({initialData, onAdd, onEdit}) => {
                 labels,
                 priority,
             };
-            onAdd(newEvent);
+            addEventHandler(newEvent);
             navigate("/time-to");
-        }
-        if (!initialData?.id && !onAdd){
-            alert("Something went wrong");
         }
     };
 

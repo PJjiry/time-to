@@ -4,12 +4,9 @@ import styles from "../styles/EventsPage.module.css";
 import {useParams} from "react-router-dom";
 
 export const EditDetailPage = () => {
-
     const params = useParams<{ id: string }>();
     const id = Number(params.id);
-    const { events, editEventHandler } = useEvents();
-
-    // Find the event to edit
+    const { events } = useEvents();
     const eventToEdit = events.find(event => event.id === id);
 
     if (!eventToEdit) {
@@ -18,8 +15,7 @@ export const EditDetailPage = () => {
 
     return(
         <main className={styles.main}>
-            <EventForm initialData={eventToEdit}
-                       onEdit={editEventHandler}/>
+            <EventForm initialData={eventToEdit}/>
         </main>
     )
 }

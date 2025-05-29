@@ -11,8 +11,6 @@ export type EventItem = {
 
 export interface EventFormProps {
     initialData?: EventItem | null,
-    onAdd?: (event: EventItem) => void,
-    onEdit?: (event: EventItem) => void,
 }
 
 export interface HeaderProps {
@@ -27,4 +25,9 @@ export type EventItemProps = {
 export type EventListProps = {
     events: EventItem[],
     onLabelClick: (label: string) => void,
+}
+
+export interface SearchBarProps {
+    searchQuery: string;
+    onSearchChange: (query: string) => void;
 }

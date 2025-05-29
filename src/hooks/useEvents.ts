@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {EventItem} from "../types";
 import {getTimeLeftFromInput} from "../utils/utils.ts";
 
@@ -9,6 +9,7 @@ export const useEvents = () => {
     });
     const [eventToEdit, setEventToEdit] = useState<EventItem | null>(null);
     const [selectedLabel, setSelectedLabel] = useState<string | null>(null);
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         const storedEvents = localStorage.getItem("my-events");
@@ -62,8 +63,20 @@ export const useEvents = () => {
         setSelectedLabel(prev => (prev === label ? null : label));
     };
 
+    const handleSearch = useCallback((query: string) => {
+        setSearchQuery(query);
+    }, []);
+
+    const searchedEvents = events.filter(event => {
+        return  searchQuery
+            ? event.title.toLowerCase().includes(searchQuery.toLowerCase())
+            : true;
+    });
+
+
+
     return{
-        events,
+        events:searchedEvents,
         eventToEdit,
         selectedLabel,
         addEventHandler,
@@ -71,5 +84,7 @@ export const useEvents = () => {
         editEventHandler,
         handleDeleteEvent,
         handleLabelClick,
+        handleSearch,
+        searchQuery,
     }
 }
