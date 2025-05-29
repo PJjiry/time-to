@@ -1,7 +1,7 @@
 export type Priority = "high" | "medium" | "low";
 
 export type EventItem = {
-    id: number;
+    id: string;
     title: string;
     description?: string;
     datetime: string;

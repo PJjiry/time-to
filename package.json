@@ -12,6 +12,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@firebase/firestore": "^4.7.16",
+    "firebase": "^11.8.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router": "^7.6.1",

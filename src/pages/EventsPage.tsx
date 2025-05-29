@@ -5,7 +5,15 @@ import EventsList from "../components/EventsList.tsx";
 import SearchBar from "../components/SearchBar.tsx";
 
 const EventsPage = () => {
-    const {events, selectedLabel, handleLabelClick, handleSearch, searchQuery} = useEvents();
+    const {events, selectedLabel, handleLabelClick, handleSearch, searchQuery, loading, error} = useEvents();
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        <div>Error: {error}</div>;   
+    }
 
     const now = new Date();
     const notPassEvents = events.filter(event => new Date(event.datetime) > now);
