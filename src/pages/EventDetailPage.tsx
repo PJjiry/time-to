@@ -7,7 +7,7 @@ import {Spinner} from "../components/Spinner.tsx";
 import {ErrorMessage} from "../components/ErrorMessage.tsx";
 
 const EventDetailPage: React.FC = () => {
-    const params = useParams<{ id: string }>();
+    const params = useParams();
     const id = Number(params.id);
     const navigate = useNavigate();
     const {events, handleDeleteEvent, loading, error} = useEvents();
@@ -32,25 +32,21 @@ const EventDetailPage: React.FC = () => {
                 {error && <ErrorMessage message={error}/>}
                 {!loading && !error && event && <>
                     <h1>{event.title}</h1>
-
                     <div className={styles.details}>
                         <div className={styles.datetime}>
                             <strong>Date and Time:</strong>
                             <span>{new Date(event.datetime).toLocaleString()}</span>
                         </div>
-
                         <div className={styles.priority}>
                             <strong>Priority:</strong>
                             <span className={styles[event.priority]}>{event.priority}</span>
                         </div>
-
                         {event.description && (
                             <div className={styles.description}>
                                 <strong>Description:</strong>
                                 <p>{event.description}</p>
                             </div>
                         )}
-
                         {event.labels && event.labels.length > 0 && (
                             <div className={styles.labels}>
                                 <strong>Labels:</strong>
@@ -63,7 +59,6 @@ const EventDetailPage: React.FC = () => {
                             </div>
                         )}
                     </div>
-
                     <div className={styles.actions}>
                         <button onClick={handleEdit} className={styles.editButton}>
                             Edit Event

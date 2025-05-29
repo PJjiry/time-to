@@ -23,12 +23,15 @@ export const firebaseAPI = {
             const eventsQuery = query(eventsCollection, orderBy('datetime', 'asc'));
             const querySnapshot = await getDocs(eventsQuery);
 
-            // @ts-ignore
-            return querySnapshot.docs.map(doc => ({
-                ...doc.data(),
-                id: Number(doc.data().id),
-                datetime: doc.data().datetime.toDate().toISOString().slice(0, 16),
-            }));
+            return querySnapshot.docs.map(doc => {
+                const data = doc.data();
+                const localDate = new Date(data.datetime.toDate().getTime() + (2 * 60 * 60 * 1000));//add 2 hours to UTC time to get local time
+                return {
+                    ...data,
+                    id: Number(data.id),
+                    datetime: localDate.toISOString().slice(0, 16),
+                } as EventItem;
+            });
         } catch (error) {
             console.error('Error fetching events:', error);
             throw error;
@@ -37,7 +40,7 @@ export const firebaseAPI = {
 
     async addEvent(event: Omit<EventItem, 'id'>): Promise<number> {
         try {
-            const newId = generateRandomId(); // Use your existing random ID generator
+            const newId = generateRandomId();
             await addDoc(collection(db, EVENTS_COLLECTION), {
                 ...event,
                 id: newId,
@@ -65,8 +68,6 @@ export const firebaseAPI = {
                     updatedAt: Timestamp.now()
                 };
                 await updateDoc(docRef, eventData);
-            } else {
-                throw new Error('Event not found');
             }
         } catch (error) {
             console.error('Error updating event:', error);
@@ -83,8 +84,6 @@ export const firebaseAPI = {
             if (!querySnapshot.empty) {
                 const docRef = doc(db, EVENTS_COLLECTION, querySnapshot.docs[0].id);
                 await deleteDoc(docRef);
-            } else {
-                throw new Error('Event not found');
             }
         } catch (error) {
             console.error('Error deleting event:', error);
