@@ -5,13 +5,11 @@ import {getTimeLeftFromInput} from '../utils/utils.ts';
 
 export const useEvents = () => {
     const [events, setEvents] = useState<EventItem[]>([]);
-    const [eventToEdit, setEventToEdit] = useState<EventItem | null>(null);
     const [selectedLabel, setSelectedLabel] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    // Fetch events from Firebase
     useEffect(() => {
         const fetchEvents = async () => {
             try {
@@ -30,7 +28,6 @@ export const useEvents = () => {
         fetchEvents();
     }, []);
 
-    // Update time left for events
     useEffect(() => {
         const interval = setInterval(() => {
             setEvents(prevEvents =>
@@ -43,7 +40,7 @@ export const useEvents = () => {
         return () => clearInterval(interval);
     }, []);
 
-    const addEventHandler = async (event: Omit<EventItem, 'id'>) => {
+    const addEventHandler = async (event: EventItem) => {
         try {
             setLoading(true);
             const newEventId = await firebaseAPI.addEvent(event);
@@ -58,10 +55,6 @@ export const useEvents = () => {
         }
     };
 
-    const startEditEventHandler = (event: EventItem) => {
-        setEventToEdit(event);
-    };
-
     const editEventHandler = async (editedEvent: EventItem) => {
         try {
             setLoading(true);
@@ -71,7 +64,6 @@ export const useEvents = () => {
                     event.id === editedEvent.id ? editedEvent : event
                 )
             );
-            setEventToEdit(null);
         } catch (err) {
             setError('Failed to update event');
             throw err;
@@ -109,12 +101,10 @@ export const useEvents = () => {
 
     return {
         events: searchedEvents,
-        eventToEdit,
         selectedLabel,
         loading,
         error,
         addEventHandler,
-        startEditEventHandler,
         editEventHandler,
         handleDeleteEvent,
         handleLabelClick,

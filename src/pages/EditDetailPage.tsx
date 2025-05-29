@@ -6,7 +6,7 @@ import {Spinner} from "../components/Spinner.tsx";
 import {ErrorMessage} from "../components/ErrorMessage.tsx";
 
 export const EditDetailPage = () => {
-    const params = useParams<{ id: string }>();
+    const params = useParams();
     const id = Number(params.id);
     const {events, loading, error} = useEvents();
     const eventToEdit = events.find(event => event.id === id);

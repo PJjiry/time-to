@@ -122,3 +122,18 @@
 .backButton:hover {
     background-color: #bdbdbd;
 }
+
+@media (max-width: 600px) {
+    .container {
+        padding: 1rem;
+    }
+    .actions {
+        flex-direction: column;
+    }
+    .actions button {
+        padding: 0.7rem 1.5rem;
+    }
+    .deleteButton {
+        order: -1;
+    }
+}
