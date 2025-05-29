@@ -1,4 +1,4 @@
-.container {
+.main {
     padding: 2rem;
     background-image: url("../../public/background-image.png");
     background-size: cover;
@@ -14,7 +14,7 @@
     color: #111827;
 }
 
-.main {
+.section {
     display: flex;
     justify-content: space-between;
     gap: 2rem;
@@ -33,7 +33,7 @@ body {
 }
 
 @media (max-width: 600px) {
-    .main {
+    .section {
         flex-direction: column;
     }
 }

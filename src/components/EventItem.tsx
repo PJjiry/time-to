@@ -2,11 +2,18 @@ import styles from "../styles/EventItem.module.css";
 import React from "react";
 import {EventItemProps} from "../types";
 import {getLabelColor, getTimeLeftFromInput} from "../utils/utils.ts";
+import {Link} from "react-router";
 
-const EventItem: React.FC<EventItemProps> = ({event, onStartEdit, onDelete, onLabelClick, isFormVisible}) => {
+const EventItem: React.FC<EventItemProps> = ({event, onLabelClick}) => {
     const timeLeft = getTimeLeftFromInput(event.datetime);
 
+    const handleLabelClick = (event:React.MouseEvent,label: string) => {
+        event.preventDefault();
+        onLabelClick(label);
+    }
+
     return (
+        <Link to={`/time-to/event/${event.id}`} className={styles.eventLink}>
         <div
             key={event.id}
             className={`${styles.card} ${styles[event.priority]}`}
@@ -19,21 +26,13 @@ const EventItem: React.FC<EventItemProps> = ({event, onStartEdit, onDelete, onLa
                     <div className={styles.labels}>
                         {event.labels?.map((label, index) => (
                             <span key={index} className={styles.label} style={{backgroundColor: getLabelColor(label)}}
-                                  onClick={() => isFormVisible ? undefined : onLabelClick(label)}>{label}</span>
+                                  onClick={(event,)=>handleLabelClick(event,label)}>{label}</span>
                         ))}
                     </div>
                 </div>
-                <div className={styles.actions}>
-                    <button className={styles.editBtn} onClick={() => onStartEdit(event)}
-                            disabled={isFormVisible}>Edit
-                    </button>
-                    <button className={styles.deleteBtn} onClick={() => {
-                        onDelete(event.id)
-                    }} disabled={isFormVisible}>Delete
-                    </button>
-                </div>
             </div>
         </div>
+        </Link>
     )
 }
 
