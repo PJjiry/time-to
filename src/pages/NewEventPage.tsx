@@ -3,13 +3,11 @@ import {useEvents} from "../hooks/useEvents.ts";
 import styles from "../styles/EventsPage.module.css";
 
 export const NewEventPage = () => {
-    const {eventToEdit,addEventHandler,editEventHandler}=useEvents();
+    const {addEventHandler}=useEvents();
 
   return(
       <main className={styles.main}>
-      <EventForm initialData={eventToEdit}
-                 onAdd={addEventHandler}
-                 onEdit={editEventHandler}/>
+      <EventForm onAdd={addEventHandler}/>
       </main>
   )
 }

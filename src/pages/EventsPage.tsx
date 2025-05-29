@@ -4,7 +4,7 @@ import Header from "../components/Header.tsx";
 import EventsList from "../components/EventsList.tsx";
 
 const EventsPage = () => {
-    const {events,selectedLabel, handleLabelClick, startEditEventHandler, handleDeleteEvent}= useEvents();
+    const {events, selectedLabel, handleLabelClick}= useEvents();
 
     const now = new Date();
     const notPassEvents = events.filter(event => new Date(event.datetime) > now);
@@ -23,8 +23,7 @@ const EventsPage = () => {
             <Header eventsLength={filteredEventsByLabel.length}/>
             <section className={styles.main}>
                 {events.length === 0 ? <div className={styles.noEvents}>No events added!!</div> :
-                    <EventsList onLabelClick={handleLabelClick} events={sortedEvents}
-                                onStartEdit={startEditEventHandler} onDelete={handleDeleteEvent}/>}
+                    <EventsList onLabelClick={handleLabelClick} events={sortedEvents}/>}
             </section>
         </main>
     );

@@ -11,8 +11,8 @@ export type EventItem = {
 
 export interface EventFormProps {
     initialData?: EventItem | null,
-    onAdd: (event: EventItem) => void,
-    onEdit: (event: EventItem) => void,
+    onAdd?: (event: EventItem) => void,
+    onEdit?: (event: EventItem) => void,
 }
 
 export interface HeaderProps {

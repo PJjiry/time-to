@@ -1,3 +1,13 @@
+.main {
+    padding: 2rem;
+    background-image: url("../../public/background-image.png");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    font-family: "Poppins", sans-serif;
+    color: #1f2937;
+    min-height: 100vh;
+}
 
 .container {
     max-width: 800px;
@@ -22,9 +32,15 @@
     color: #333;
 }
 
+.datetime {
+    display: flex;
+    gap: 0.5rem;
+   align-items: baseline;
+}
+
 .priority {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     gap: 0.5rem;
 }
 
@@ -32,6 +48,10 @@
     padding: 0.25rem 0.75rem;
     border-radius: 4px;
     text-transform: capitalize;
+}
+
+.description {
+    margin-top: 2rem;
 }
 
 .high {
@@ -56,10 +76,8 @@
 }
 
 .label {
-    background-color: #e3f2fd;
-    color: #1976d2;
     padding: 0.25rem 0.75rem;
-    border-radius: 16px;
+    border-radius: 4px;
     font-size: 0.875rem;
 }
 

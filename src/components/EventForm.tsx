@@ -20,7 +20,7 @@ const EventForm: React.FC<EventFormProps> = ({initialData, onAdd, onEdit}) => {
             .map(label => label.trim())
             .filter(label => label.length > 0);
 
-        if (initialData?.id) {
+        if (initialData?.id && onEdit) {
             const editedEvent: EventItem = {
                 id: initialData.id,
                 title,
@@ -30,8 +30,9 @@ const EventForm: React.FC<EventFormProps> = ({initialData, onAdd, onEdit}) => {
                 priority,
             };
             onEdit(editedEvent);
-            navigate("/time-to/");
-        } else {
+            navigate(`/time-to/event/${initialData.id}`);
+        }
+        if (!initialData?.id && onAdd){
             const newEvent: EventItem = {
                 id: generateRandomId(),
                 title,
@@ -42,6 +43,9 @@ const EventForm: React.FC<EventFormProps> = ({initialData, onAdd, onEdit}) => {
             };
             onAdd(newEvent);
             navigate("/time-to");
+        }
+        if (!initialData?.id && !onAdd){
+            alert("Something went wrong");
         }
     };
 
